@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <!--
+    shape的類型含有:
+    1.rectangle   長方形、矩形
+    2.oval   橢圓形、卵形
+    3.line   線
+    4.ring   環形
+    -->
+
+    <gradient
+        android:type="linear"
+        android:startColor="#9FA8DA"
+        android:centerColor="#E8EAF6"
+        android:endColor="#C5CAE9"
+        android:centerX="0.5"
+        android:centerY="0.5"
+        android:angle="270"/>
+
+    <!-- 圓角，Layout佈局圓角幅度設定值 -->
+    <corners android:radius="5dip" />
+    <!-- 外框，框線粗細，框線顏色 -->
+    <stroke
+        android:width="7.0dip"
+        android:color="#E8EAF6" />
+</shape>

@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "593985867565",
+    "project_id": "grtclientgcm-1470385382375"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:593985867565:android:c47a5c253abb3593",
+        "android_client_info": {
+          "package_name": "com.grtek.user.gcm_client"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD21QHzWI2NipFG3fMbKFPRITmNsL2tak0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
