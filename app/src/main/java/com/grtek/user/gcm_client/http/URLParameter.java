@@ -75,7 +75,7 @@ public class URLParameter {
         return params;
     }
 
-    public HashMap<String, String> getSignIn(String email, String password){
+    public HashMap<String, String> getSignUp(String email, String password){
 
         HashMap<String, String> params = new HashMap<>();
         try{

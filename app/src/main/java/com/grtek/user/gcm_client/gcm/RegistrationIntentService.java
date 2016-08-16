@@ -94,6 +94,8 @@ public class RegistrationIntentService extends IntentService {
                                     token
                             )
                     );
+                    Log.i(TAG, "user id is "
+                            + sharedPreferences.getString(QuickstartPreferences.USERID , "0"));
 
                 }
             }).start();

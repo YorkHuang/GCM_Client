@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/imageButton_rv_webcam"
             android:layout_gravity="center_horizontal"
-            android:src="@android:drawable/ic_media_ff" />
+            android:src="@android:drawable/ic_media_play" />
     </LinearLayout>
 
 

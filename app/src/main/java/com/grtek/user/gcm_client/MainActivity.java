@@ -278,13 +278,16 @@ public class MainActivity extends AppCompatActivity  {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         isShowDialog = false;
+                        mProgress.setVisibility(View.GONE);
+                        if (mHandler != null && mRunnable != null) {
+                            mHandler.removeCallbacks(mRunnable);
+                        }
                     }
                 })
                 .setNegativeButton(R.string.dialog_again, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         isShowDialog = false;
-                        getEmergencyStreeLightsInfo();
                     }
                 })
                 .show();

@@ -53,6 +53,11 @@ import static android.Manifest.permission.READ_CONTACTS;
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
+    private enum ACTION{
+        SIGNIN,
+        SIGNUP
+    }
+
     private final static String TAG = LoginActivity.class.getSimpleName();
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -76,7 +81,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-
     private SharedPreferences sp;
 
     @Override
@@ -95,7 +99,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
+                    attemptLogin(ACTION.SIGNIN);
                     return true;
                 }
                 return false;
@@ -107,7 +111,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public void onClick(View view) {
 
-                attemptLogin();
+                attemptLogin(ACTION.SIGNIN);
+
+            }
+        });
+
+        Button mEmailRegisterButton = (Button) findViewById(R.id.email_register_button);
+        mEmailRegisterButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                attemptLogin(ACTION.SIGNUP);
 
             }
         });
@@ -172,7 +186,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
-    private void attemptLogin() {
+    private void attemptLogin(ACTION action) {
         if (mAuthTask != null) {
             return;
         }
@@ -215,7 +229,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
+            mAuthTask = new UserLoginTask(email, password, action);
             mAuthTask.execute((Void) null);
         }
     }
@@ -328,10 +342,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         private final String mEmail;
         private final String mPassword;
+        private ACTION action_type;
 
-        UserLoginTask(String email, String password) {
+        UserLoginTask(String email, String password, ACTION type) {
             mEmail = email;
             mPassword = password;
+            action_type = type;
         }
 
         @Override
@@ -339,14 +355,27 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             JSONParser jParser = new JSONParser();
             URLParameter urlParam = new URLParameter();
-
-            JSONObject msg = jParser.makeHttpRequest(
-                    "lib/lib_app_login.php",
-                    "POST",
-                    urlParam.getLogin(mEmail, mPassword)
-            );
-
+            JSONObject msg = null;
             String uid = "";
+
+            if (action_type == ACTION.SIGNIN) {
+
+                msg = jParser.makeHttpRequest(
+                        "lib/lib_app_login.php",
+                        "POST",
+                        urlParam.getLogin(mEmail, mPassword)
+                );
+
+            } else if (action_type == ACTION.SIGNUP){
+
+                msg = jParser.makeHttpRequest(
+                        "lib/lib_app_login.php",
+                        "POST",
+                        urlParam.getSignUp(mEmail, mPassword)
+                );
+
+            }
+
             if (msg != null) {
                 try {
                     if (msg.getString("status").equals("OK")) {
@@ -356,13 +385,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         SharedPreferences sp = PreferenceManager
                                 .getDefaultSharedPreferences(LoginActivity.this);
 
-                        sp.edit().putString(QuickstartPreferences.USERID, uid);
-
+                        sp.edit().putString(QuickstartPreferences.USERID, uid).commit();
+                        Log.i(TAG, "login success , uid = "+uid);
                     } else {
-
+                        Log.i(TAG, "login fail");
                     }
                 } catch(Exception e){
-
+                    Log.i(TAG, "login e:"+e.toString());
                 }
 
             }
