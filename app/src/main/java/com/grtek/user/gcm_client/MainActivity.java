@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +28,7 @@ import com.grtek.user.gcm_client.gcm.QuickstartPreferences;
 import com.grtek.user.gcm_client.gcm.RegistrationIntentService;
 import com.grtek.user.gcm_client.http.JSONParser;
 import com.grtek.user.gcm_client.http.URLParameter;
+import com.grtek.user.gcm_client.sip.SIPActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity  {
     private boolean isShowDialog = false;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -127,6 +127,8 @@ public class MainActivity extends AppCompatActivity  {
         if (mHandler != null && mRunnable != null) {
             mHandler.removeCallbacks(mRunnable);
         }
+        if (uiHandler != null)
+            uiHandler = null;
     }
 
     private void registerReceiver(){
@@ -167,6 +169,11 @@ public class MainActivity extends AppCompatActivity  {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.action_sip:
+                Intent iSip = new Intent(this, SIPActivity.class);
+                startActivity(iSip);
+                return true;
+
             case R.id.action_settings:
                 Intent iSetting = new Intent(this, SettingsActivity.class);
                 startActivity(iSetting);
@@ -271,6 +278,7 @@ public class MainActivity extends AppCompatActivity  {
 
         isShowDialog = true;
 
+
         new AlertDialog.Builder(MainActivity.this)
                 .setTitle(R.string.dialog_title)
                 .setMessage(R.string.dialog_message)
@@ -291,6 +299,7 @@ public class MainActivity extends AppCompatActivity  {
                     }
                 })
                 .show();
+
     }
 
 }

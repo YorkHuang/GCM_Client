@@ -33,4 +33,7 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_again">Try again</string>
 
+    <!--SIP-->
+    <string name="contactAddress">SIP Address to contact</string>
+    <string name="talk">Talk</string>
 </resources>

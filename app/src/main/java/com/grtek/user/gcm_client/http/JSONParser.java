@@ -20,7 +20,8 @@ import java.util.HashMap;
  */
 public class JSONParser {
 
-    private final static String GRT_URL = "http://192.168.0.20/touch/%s";
+//    private final static String GRT_URL = "http://192.168.0.20/touch/%s";
+    private final static String GRT_URL = "http://10.0.0.121/touch/%s";
 
     public JSONParser(){
 
